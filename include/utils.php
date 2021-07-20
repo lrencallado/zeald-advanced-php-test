@@ -1,10 +1,11 @@
 <?php
 
-require_once('vendor/autoload.php');
+// require_once('vendor/autoload.php');
 use Illuminate\Support;
 
 // global connection object
 global $mysqli_db;
+$database = 'nba2019';
 $mysqli_db = new mysqli('localhost', 'root', '', $database ?: 'employees');
 
 /**

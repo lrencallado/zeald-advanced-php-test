@@ -1,4 +1,7 @@
 <?php
+
+namespace app\models;
+
 use Illuminate\Support;
 use LSS\Array2Xml;
 
@@ -21,7 +24,7 @@ class Exporter {
                 INNER JOIN roster ON (roster.id = player_totals.player_id)
             WHERE $where";
         $data = query($sql) ?: [];
-
+        
         // calculate totals
         foreach ($data as &$row) {
             unset($row['player_id']);

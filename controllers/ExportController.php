@@ -1,17 +1,31 @@
 <?php
+namespace app\controllers;
+
 use Illuminate\Support;  // https://laravel.com/docs/5.8/collections - provides the collect methods & collections class
 use LSS\Array2Xml;
-require_once('classes/Exporter.php');
+use app\models\Exporter;
+use app\core\Request;
 
-class Controller {
+class ExportController {
 
-    public function __construct($args) {
-        $this->args = $args;
+    public $args;
+    public function __construct() {
+        
     }
 
-    public function export($type, $format) {
+    public function export(Request $request) {
+
+        $this->args = $request->getHeader();
+
+        $format = $this->args->pull('format') ?: 'html';
+        $type = $this->args->pull('type');
+        if (!$type) {
+            exit('Please specify a type');
+        }
+
         $data = [];
         $exporter = new Exporter();
+        
         switch ($type) {
             case 'playerstats':
                 $searchArgs = ['player', 'playerId', 'team', 'position', 'country'];
